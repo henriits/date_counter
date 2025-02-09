@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Modal from "./Modal";
 
 interface DateItem {
@@ -11,8 +11,8 @@ interface CalendarViewProps {
     dates: DateItem[];
 }
 
-const CalendarView: React.FC<CalendarViewProps> = ({ dates }) => {
-    const [modal, setModal] = useState<{ isOpen: boolean; events: { name: string; time: string; timeLeft: string }[] }>({
+const CalendarView = ({ dates }:CalendarViewProps) => {
+    const [modal, setModal] = useState<{ isOpen: boolean; events: { name: string; time: string; getTimeLeft: () => string }[] }>({
         isOpen: false,
         events: [],
     });
@@ -61,7 +61,7 @@ const CalendarView: React.FC<CalendarViewProps> = ({ dates }) => {
         }).map(event => ({
             name: event.name,
             time: event.date.toLocaleTimeString("en-GB", { hour12: false }),
-            timeLeft: getTimeLeft(event.date),
+            getTimeLeft: () => getTimeLeft(event.date),
         }));
 
         return events;

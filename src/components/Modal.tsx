@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import EventDetails from "./EventDetails";
 
 interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
-    events: { name: string; time: string; timeLeft: string }[];
+    events: { name: string; time: string; getTimeLeft: () => string }[];
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, events }) => {
-    const [timeLeft, setTimeLeft] = useState(events.map(event => event.timeLeft));
+const Modal = ({ isOpen, onClose, events }:ModalProps) => {
+    const [timeLeft, setTimeLeft] = useState(events.map(event => event.getTimeLeft()));
 
     useEffect(() => {
         if (isOpen) {
             const interval = setInterval(() => {
-                setTimeLeft(events.map(event => event.timeLeft));
+                setTimeLeft(events.map(event => event.getTimeLeft()));
             }, 1000);
             return () => clearInterval(interval);
         }
