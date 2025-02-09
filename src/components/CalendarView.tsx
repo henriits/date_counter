@@ -3,7 +3,8 @@ import Modal from "./Modal";
 
 interface DateItem {
     id: number;
-    date: Date;
+    startDate: Date;
+    endDate: Date;
     name: string;
 }
 
@@ -31,7 +32,7 @@ const CalendarView = ({ dates }: CalendarViewProps) => {
 
     const isDateHighlighted = (day: number, month: number) => {
         return dates.some(dateItem => {
-            const date = new Date(dateItem.date);
+            const date = new Date(dateItem.startDate);
             return date.getDate() === day + 1 && date.getMonth() === month && date.getFullYear() === currentYear;
         });
     };
@@ -44,9 +45,18 @@ const CalendarView = ({ dates }: CalendarViewProps) => {
         );
     };
 
+    const isMultiDayEvent = (day: number, month: number) => {
+        return dates.some(dateItem => {
+            const startDate = new Date(dateItem.startDate);
+            const endDate = new Date(dateItem.endDate);
+            const currentDate = new Date(currentYear, month, day + 1);
+            return currentDate >= startDate && currentDate <= endDate;
+        });
+    };
+
     const getEventCount = (day: number, month: number) => {
         return dates.filter(dateItem => {
-            const date = new Date(dateItem.date);
+            const date = new Date(dateItem.startDate);
             return date.getDate() === day + 1 && date.getMonth() === month && date.getFullYear() === currentYear;
         }).length;
     };
@@ -65,12 +75,12 @@ const CalendarView = ({ dates }: CalendarViewProps) => {
 
     const getEventDetails = (day: number, month: number) => {
         const events = dates.filter(dateItem => {
-            const date = new Date(dateItem.date);
+            const date = new Date(dateItem.startDate);
             return date.getDate() === day + 1 && date.getMonth() === month && date.getFullYear() === currentYear;
         }).map(event => ({
             name: event.name,
-            time: event.date.toLocaleTimeString("en-GB", { hour12: false }),
-            getTimeLeft: () => getTimeLeft(event.date),
+            time: event.startDate.toLocaleTimeString("en-GB", { hour12: false }),
+            getTimeLeft: () => getTimeLeft(event.endDate),
         }));
 
         return events;
@@ -102,6 +112,8 @@ const CalendarView = ({ dates }: CalendarViewProps) => {
                                 className={`day p-4 border rounded-lg cursor-pointer h-20 ${
                                     isCurrentDay(day, index)
                                         ? "bg-green-500 text-white"
+                                        : isMultiDayEvent(day, index)
+                                        ? "bg-blue-500 text-white"
                                         : isDateHighlighted(day, index)
                                         ? "bg-amber-700 text-white"
                                         : "bg-gray-100"
