@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
+import { FaEdit, FaTrash, FaPlus, FaCalendarAlt, FaList } from "react-icons/fa";
 import CalendarView from "./components/CalendarView";
 import "./App.css";
 
@@ -23,6 +23,7 @@ const App: React.FC = () => {
     const [inputName, setInputName] = useState("");
     const [searchTerm, setSearchTerm] = useState("");
     const [editId, setEditId] = useState<number | null>(null);
+    const [showCalendar, setShowCalendar] = useState(false);
 
     useEffect(() => {
         localStorage.setItem("dates", JSON.stringify(dates));
@@ -129,41 +130,50 @@ const App: React.FC = () => {
                     onChange={handleSearch}
                     className="input input-bordered"
                 />
+                <button
+                    onClick={() => setShowCalendar(!showCalendar)}
+                    className="btn btn-secondary ml-2"
+                >
+                    {showCalendar ? <FaList /> : <FaCalendarAlt />}
+                </button>
             </div>
-            <ul className="list-none">
-                {filteredDates.map((item) => (
-                    <li key={item.id} className="mb-4 p-4 border rounded shadow">
-                        <div className="flex justify-between items-center">
-                            <div>
-                                <span className="block text-lg font-semibold">{item.name}</span>
-                                <span className="block text-sm text-gray-600">
-                                    {item.date.toLocaleString("en-GB", {
-                                        hour12: false,
-                                    })}
-                                </span>
-                                <div className="text-sm text-gray-500">
-                                    {getTimeLeft(item.date)}
+            {showCalendar ? (
+                <CalendarView />
+            ) : (
+                <ul className="list-none">
+                    {filteredDates.map((item) => (
+                        <li key={item.id} className="mb-4 p-4 border rounded shadow">
+                            <div className="flex justify-between items-center">
+                                <div>
+                                    <span className="block text-lg font-semibold">{item.name}</span>
+                                    <span className="block text-sm text-gray-600">
+                                        {item.date.toLocaleString("en-GB", {
+                                            hour12: false,
+                                        })}
+                                    </span>
+                                    <div className="text-sm text-gray-500">
+                                        {getTimeLeft(item.date)}
+                                    </div>
+                                </div>
+                                <div className="flex space-x-2">
+                                    <button
+                                        onClick={() => handleEdit(item.id)}
+                                        className="btn btn-warning"
+                                    >
+                                        <FaEdit />
+                                    </button>
+                                    <button
+                                        onClick={() => handleDelete(item.id)}
+                                        className="btn btn-error"
+                                    >
+                                        <FaTrash />
+                                    </button>
                                 </div>
                             </div>
-                            <div className="flex space-x-2">
-                                <button
-                                    onClick={() => handleEdit(item.id)}
-                                    className="btn btn-warning"
-                                >
-                                    <FaEdit />
-                                </button>
-                                <button
-                                    onClick={() => handleDelete(item.id)}
-                                    className="btn btn-error"
-                                >
-                                    <FaTrash />
-                                </button>
-                            </div>
-                        </div>
-                    </li>
-                ))}
-            </ul>
-            <CalendarView />
+                        </li>
+                    ))}
+                </ul>
+            )}
         </div>
     );
 };
