@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
+import CalendarView from "./components/CalendarView";
 import "./App.css";
 
 interface DateItem {
@@ -8,7 +9,7 @@ interface DateItem {
     name: string;
 }
 
-function App() {
+const App: React.FC = () => {
     const [dates, setDates] = useState<DateItem[]>(() => {
         const savedDates = localStorage.getItem("dates");
         return savedDates
@@ -162,8 +163,9 @@ function App() {
                     </li>
                 ))}
             </ul>
+            <CalendarView />
         </div>
     );
-}
+};
 
 export default App;
