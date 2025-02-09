@@ -138,7 +138,7 @@ const App: React.FC = () => {
                 </button>
             </div>
             {showCalendar ? (
-                <CalendarView />
+                <CalendarView dates={dates} />
             ) : (
                 <ul className="list-none">
                     {filteredDates.map((item) => (
