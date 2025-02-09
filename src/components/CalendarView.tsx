@@ -99,7 +99,7 @@ const CalendarView = ({ dates }: CalendarViewProps) => {
                         {Array.from({ length: getDaysInMonth(index, currentYear) }, (_, day) => (
                             <div
                                 key={day}
-                                className={`day p-4 border rounded-lg cursor-pointer ${
+                                className={`day p-4 border rounded-lg cursor-pointer h-20 ${
                                     isCurrentDay(day, index)
                                         ? "bg-green-500 text-white"
                                         : isDateHighlighted(day, index)
