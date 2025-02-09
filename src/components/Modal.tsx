@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import EventDetails from "./EventDetails";
 
 interface ModalProps {
@@ -7,7 +7,7 @@ interface ModalProps {
     events: { name: string; time: string; getTimeLeft: () => string }[];
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, events }) => {
+const Modal = ({ isOpen, onClose, events }: ModalProps) => {
     const [timeLeft, setTimeLeft] = useState(events.map(event => event.getTimeLeft()));
 
     useEffect(() => {

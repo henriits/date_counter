@@ -11,7 +11,7 @@ interface CalendarViewProps {
     dates: DateItem[];
 }
 
-const CalendarView = ({ dates }:CalendarViewProps) => {
+const CalendarView = ({ dates }: CalendarViewProps) => {
     const [modal, setModal] = useState<{ isOpen: boolean; events: { name: string; time: string; getTimeLeft: () => string }[] }>({
         isOpen: false,
         events: [],
@@ -84,18 +84,18 @@ const CalendarView = ({ dates }:CalendarViewProps) => {
     return (
         <div className="calendar-view relative">
             {months.map((month, index) => (
-                <div key={index} className="month">
-                    <h2 className="text-xl font-bold mb-2">{month}</h2>
-                    <div className="grid grid-cols-7 gap-1">
+                <div key={index} className="month mb-6">
+                    <h2 className="text-2xl font-bold mb-4">{month}</h2>
+                    <div className="grid grid-cols-7 gap-2">
                         {Array.from({ length: getDaysInMonth(index, currentYear) }, (_, day) => (
                             <div
                                 key={day}
-                                className={`day p-2 border rounded cursor-pointer ${isDateHighlighted(day, index) ? "bg-blue-500 text-white" : ""}`}
+                                className={`day p-4 border rounded-lg cursor-pointer ${isDateHighlighted(day, index) ? "bg-blue-500 text-white" : "bg-gray-100"}`}
                                 onClick={() => handleClick(day, index)}
                             >
-                                {day + 1}
+                                <div className="text-lg font-semibold">{day + 1}</div>
                                 {isDateHighlighted(day, index) && (
-                                    <div className="text-xs text-gray-700">
+                                    <div className="text-xs text-gray-700 mt-1">
                                         {getEventCount(day, index)} event(s)
                                     </div>
                                 )}

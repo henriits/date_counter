@@ -9,7 +9,7 @@ interface DateItem {
     name: string;
 }
 
-const App: React.FC = () => {
+const App = () => {
     const [dates, setDates] = useState<DateItem[]>(() => {
         const savedDates = localStorage.getItem("dates");
         return savedDates
@@ -99,27 +99,27 @@ const App: React.FC = () => {
     };
 
     return (
-        <div className="container mx-auto p-4">
-            <h1 className="text-3xl font-bold mb-4">Event Planner</h1>
-            <div className="flex flex-col md:flex-row items-center mb-4">
+        <div className="container mx-auto p-6">
+            <h1 className="text-4xl font-bold mb-6">Event Planner</h1>
+            <div className="flex flex-col md:flex-row items-center mb-6 space-y-4 md:space-y-0 md:space-x-4">
                 <input
                     type="text"
                     placeholder="Event Name"
                     value={inputName}
                     onChange={(e) => setInputName(e.target.value)}
-                    className="input input-bordered mb-2 md:mb-0 md:mr-2"
+                    className="input input-bordered w-full md:w-auto"
                 />
                 <input
                     type="datetime-local"
                     value={inputDate}
                     onChange={(e) => setInputDate(e.target.value)}
-                    className="input input-bordered mb-2 md:mb-0 md:mr-2"
+                    className="input input-bordered w-full md:w-auto"
                 />
                 <button
                     onClick={addDate}
                     className={`btn ${
                         editId !== null ? "btn-warning" : "btn-primary"
-                    } mb-2 md:mb-0 md:mr-2`}
+                    } w-full md:w-auto`}
                 >
                     {editId !== null ? <FaEdit /> : <FaPlus />}
                 </button>
@@ -129,12 +129,12 @@ const App: React.FC = () => {
                         placeholder="Search date or name"
                         value={searchTerm}
                         onChange={handleSearch}
-                        className="input input-bordered"
+                        className="input input-bordered w-full md:w-auto"
                     />
                 )}
                 <button
                     onClick={() => setShowCalendar(!showCalendar)}
-                    className="btn btn-secondary ml-2"
+                    className="btn btn-secondary w-full md:w-auto"
                 >
                     {showCalendar ? <FaList /> : <FaCalendarAlt />}
                 </button>
@@ -142,9 +142,9 @@ const App: React.FC = () => {
             {showCalendar ? (
                 <CalendarView dates={dates} />
             ) : (
-                <ul className="list-none">
+                <ul className="list-none space-y-4">
                     {filteredDates.map((item) => (
-                        <li key={item.id} className="mb-4 p-4 border rounded shadow">
+                        <li key={item.id} className="p-4 border rounded-lg shadow-md">
                             <div className="flex justify-between items-center">
                                 <div>
                                     <span className="block text-lg font-semibold">{item.name}</span>

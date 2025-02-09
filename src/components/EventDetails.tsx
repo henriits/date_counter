@@ -1,12 +1,10 @@
-import React from "react";
-
 interface EventDetailsProps {
     name: string;
     time: string;
     timeLeft: string;
 }
 
-const EventDetails: React.FC<EventDetailsProps> = ({ name, time, timeLeft }) => {
+const EventDetails = ({ name, time, timeLeft }: EventDetailsProps) => {
     return (
         <div className="p-4 bg-gray-100 rounded-lg shadow-md">
             <h3 className="text-lg font-semibold">{name}</h3>
