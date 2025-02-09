@@ -4,7 +4,7 @@ import EventDetails from "./EventDetails";
 interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
-    events: { name: string; time: string; getTimeLeft: () => string }[];
+    events: { name: string; startDate: Date; endDate: Date; getTimeLeft: () => string }[];
 }
 
 const Modal = ({ isOpen, onClose, events }: ModalProps) => {
@@ -33,7 +33,8 @@ const Modal = ({ isOpen, onClose, events }: ModalProps) => {
                         <EventDetails
                             key={index}
                             name={event.name}
-                            time={event.time}
+                            startDate={event.startDate}
+                            endDate={event.endDate}
                             timeLeft={timeLeft[index]}
                         />
                     ))}

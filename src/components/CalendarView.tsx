@@ -13,7 +13,7 @@ interface CalendarViewProps {
 }
 
 const CalendarView = ({ dates }: CalendarViewProps) => {
-    const [modal, setModal] = useState<{ isOpen: boolean; events: { name: string; time: string; getTimeLeft: () => string }[] }>({
+    const [modal, setModal] = useState<{ isOpen: boolean; events: { name: string; startDate: Date; endDate: Date; getTimeLeft: () => string }[] }>({
         isOpen: false,
         events: [],
     });
@@ -75,11 +75,14 @@ const CalendarView = ({ dates }: CalendarViewProps) => {
 
     const getEventDetails = (day: number, month: number) => {
         const events = dates.filter(dateItem => {
-            const date = new Date(dateItem.startDate);
-            return date.getDate() === day + 1 && date.getMonth() === month && date.getFullYear() === currentYear;
+            const startDate = new Date(dateItem.startDate);
+            const endDate = new Date(dateItem.endDate);
+            const currentDate = new Date(currentYear, month, day + 1);
+            return currentDate >= startDate && currentDate <= endDate;
         }).map(event => ({
             name: event.name,
-            time: event.startDate.toLocaleTimeString("en-GB", { hour12: false }),
+            startDate: event.startDate,
+            endDate: event.endDate,
             getTimeLeft: () => getTimeLeft(event.endDate),
         }));
 
