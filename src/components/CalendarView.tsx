@@ -12,9 +12,10 @@ interface CalendarViewProps {
 }
 
 const CalendarView: React.FC<CalendarViewProps> = ({ dates }) => {
-    const [modal, setModal] = useState<{ isOpen: boolean; content: string }>({
+    const [modal, setModal] = useState<{ isOpen: boolean; content: string; getTimeLeft: () => string }>({
         isOpen: false,
         content: "",
+        getTimeLeft: () => "",
     });
 
     const months = [
@@ -35,26 +36,44 @@ const CalendarView: React.FC<CalendarViewProps> = ({ dates }) => {
         });
     };
 
+    const getTimeLeft = (date: Date) => {
+        const now = new Date().getTime();
+        const timeLeft = date.getTime() - now;
+        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+            (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+        return `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds left`;
+    };
+
     const getEventDetails = (day: number, month: number) => {
         const dateItem = dates.find(dateItem => {
             const date = new Date(dateItem.date);
             return date.getDate() === day + 1 && date.getMonth() === month && date.getFullYear() === currentYear;
         });
-        return dateItem ? `${dateItem.name} at ${dateItem.date.toLocaleTimeString("en-GB", { hour12: false })}` : "";
+        return dateItem
+            ? {
+                content: `${dateItem.name} at ${dateItem.date.toLocaleTimeString("en-GB", { hour12: false })}`,
+                getTimeLeft: () => getTimeLeft(dateItem.date),
+            }
+            : { content: "", getTimeLeft: () => "" };
     };
 
     const handleClick = (day: number, month: number) => {
-        const content = getEventDetails(day, month);
+        const { content, getTimeLeft } = getEventDetails(day, month);
         if (content) {
             setModal({
                 isOpen: true,
                 content,
+                getTimeLeft,
             });
         }
     };
 
     const closeModal = () => {
-        setModal({ isOpen: false, content: "" });
+        setModal({ isOpen: false, content: "", getTimeLeft: () => "" });
     };
 
     return (
@@ -75,7 +94,7 @@ const CalendarView: React.FC<CalendarViewProps> = ({ dates }) => {
                     </div>
                 </div>
             ))}
-            <Modal isOpen={modal.isOpen} onClose={closeModal} content={modal.content} />
+            <Modal isOpen={modal.isOpen} onClose={closeModal} content={modal.content} getTimeLeft={modal.getTimeLeft} />
         </div>
     );
 };
