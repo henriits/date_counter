@@ -123,13 +123,15 @@ const App: React.FC = () => {
                 >
                     {editId !== null ? <FaEdit /> : <FaPlus />}
                 </button>
-                <input
-                    type="text"
-                    placeholder="Search date or name"
-                    value={searchTerm}
-                    onChange={handleSearch}
-                    className="input input-bordered"
-                />
+                {!showCalendar && (
+                    <input
+                        type="text"
+                        placeholder="Search date or name"
+                        value={searchTerm}
+                        onChange={handleSearch}
+                        className="input input-bordered"
+                    />
+                )}
                 <button
                     onClick={() => setShowCalendar(!showCalendar)}
                     className="btn btn-secondary ml-2"
