@@ -24,6 +24,7 @@ const App = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [editId, setEditId] = useState<number | null>(null);
     const [showCalendar, setShowCalendar] = useState(false);
+    const [currentTime, setCurrentTime] = useState(new Date());
 
     useEffect(() => {
         localStorage.setItem("dates", JSON.stringify(dates));
@@ -35,6 +36,13 @@ const App = () => {
             prevDates.filter((item) => new Date(item.date) > now)
         );
     }, [dates]);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentTime(new Date());
+        }, 1000);
+        return () => clearInterval(interval);
+    }, []);
 
     const addDate = () => {
         if (inputDate && inputName) {
@@ -98,9 +106,26 @@ const App = () => {
         return `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds left`;
     };
 
+    const currentDate = currentTime.toLocaleDateString("en-GB", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    });
+
+    const currentTimeString = currentTime.toLocaleTimeString("en-GB", {
+        hour12: false,
+    });
+
     return (
         <div className="container mx-auto p-6">
-            <h1 className="text-4xl font-bold mb-6 text-center">Event Planner</h1>
+            <h1 className="text-4xl font-bold mb-2 text-center">
+                Event Planner
+            </h1>
+            <div className="text-center mb-6">
+                <div className="text-lg font-normal">{currentDate}</div>
+                <div className="text-lg font-normal">{currentTimeString}</div>
+            </div>
             <div className="flex flex-col md:flex-row items-center mb-6 space-y-4 md:space-y-0 md:space-x-4 text-left">
                 <input
                     type="text"

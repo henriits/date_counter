@@ -27,12 +27,21 @@ const CalendarView = ({ dates }: CalendarViewProps) => {
     };
 
     const currentYear = new Date().getFullYear();
+    const currentDate = new Date();
 
     const isDateHighlighted = (day: number, month: number) => {
         return dates.some(dateItem => {
             const date = new Date(dateItem.date);
             return date.getDate() === day + 1 && date.getMonth() === month && date.getFullYear() === currentYear;
         });
+    };
+
+    const isCurrentDay = (day: number, month: number) => {
+        return (
+            currentDate.getDate() === day + 1 &&
+            currentDate.getMonth() === month &&
+            currentDate.getFullYear() === currentYear
+        );
     };
 
     const getEventCount = (day: number, month: number) => {
@@ -90,7 +99,13 @@ const CalendarView = ({ dates }: CalendarViewProps) => {
                         {Array.from({ length: getDaysInMonth(index, currentYear) }, (_, day) => (
                             <div
                                 key={day}
-                                className={`day p-4 border rounded-lg cursor-pointer ${isDateHighlighted(day, index) ? "bg-amber-700 text-white" : "bg-gray-100"}`}
+                                className={`day p-4 border rounded-lg cursor-pointer ${
+                                    isCurrentDay(day, index)
+                                        ? "bg-green-500 text-white"
+                                        : isDateHighlighted(day, index)
+                                        ? "bg-amber-700 text-white"
+                                        : "bg-gray-100"
+                                }`}
                                 onClick={() => handleClick(day, index)}
                             >
                                 <div className="text-lg font-semibold">{day + 1}</div>
