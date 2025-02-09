@@ -132,19 +132,19 @@ const App = () => {
                     placeholder="Event Name"
                     value={inputName}
                     onChange={(e) => setInputName(e.target.value)}
-                    className="input input-bordered w-full md:w-auto"
+                    className="input input-bordered w-full md:w-auto px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <input
                     type="datetime-local"
                     value={inputDate}
                     onChange={(e) => setInputDate(e.target.value)}
-                    className="input input-bordered w-full md:w-auto"
+                    className="input input-bordered w-full md:w-auto px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <button
                     onClick={addDate}
                     className={`btn ${
                         editId !== null ? "btn-warning" : "btn-primary"
-                    } w-full md:w-auto`}
+                    } w-full md:w-auto px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-blue-500`}
                 >
                     {editId !== null ? <FaEdit /> : <FaPlus />}
                 </button>
@@ -154,13 +154,13 @@ const App = () => {
                         placeholder="Search date or name"
                         value={searchTerm}
                         onChange={handleSearch}
-                        className="input input-bordered w-full md:w-auto"
+                        className="input input-bordered w-full md:w-auto px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                 )}
                 <div className="flex-grow"></div>
                 <button
                     onClick={() => setShowCalendar(!showCalendar)}
-                    className="btn btn-secondary w-full md:w-auto"
+                    className="btn btn-secondary w-full md:w-auto px-4 py-2 rounded-lg bg-gray-500 text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500"
                 >
                     {showCalendar ? <FaList /> : <FaCalendarAlt />}
                 </button>
@@ -186,13 +186,13 @@ const App = () => {
                                 <div className="flex space-x-2">
                                     <button
                                         onClick={() => handleEdit(item.id)}
-                                        className="btn btn-warning"
+                                        className="btn btn-warning px-4 py-2 rounded-lg bg-yellow-500 text-white hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500"
                                     >
                                         <FaEdit />
                                     </button>
                                     <button
                                         onClick={() => handleDelete(item.id)}
-                                        className="btn btn-error"
+                                        className="btn btn-error px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500"
                                     >
                                         <FaTrash />
                                     </button>
