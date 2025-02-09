@@ -78,7 +78,10 @@ const CalendarView = ({ dates }: CalendarViewProps) => {
             const startDate = new Date(dateItem.startDate);
             const endDate = new Date(dateItem.endDate);
             const currentDate = new Date(currentYear, month, day + 1);
-            return currentDate >= startDate && currentDate <= endDate;
+            return (
+                (currentDate >= startDate && currentDate <= endDate) ||
+                (startDate.getDate() === day + 1 && startDate.getMonth() === month && startDate.getFullYear() === currentYear)
+            );
         }).map(event => ({
             name: event.name,
             startDate: event.startDate,
@@ -103,6 +106,19 @@ const CalendarView = ({ dates }: CalendarViewProps) => {
         setModal({ isOpen: false, events: [] });
     };
 
+    const getEventColor = (day: number, month: number) => {
+        if (isCurrentDay(day, month)) {
+            return "bg-green-500 text-white";
+        }
+        if (isMultiDayEvent(day, month)) {
+            return "bg-blue-500 text-white";
+        }
+        if (isDateHighlighted(day, month)) {
+            return "bg-amber-700 text-white";
+        }
+        return "bg-gray-100";
+    };
+
     return (
         <div className="calendar-view relative text-left">
             {months.map((month, index) => (
@@ -112,15 +128,7 @@ const CalendarView = ({ dates }: CalendarViewProps) => {
                         {Array.from({ length: getDaysInMonth(index, currentYear) }, (_, day) => (
                             <div
                                 key={day}
-                                className={`day p-4 border rounded-lg cursor-pointer h-20 ${
-                                    isCurrentDay(day, index)
-                                        ? "bg-green-500 text-white"
-                                        : isMultiDayEvent(day, index)
-                                        ? "bg-blue-500 text-white"
-                                        : isDateHighlighted(day, index)
-                                        ? "bg-amber-700 text-white"
-                                        : "bg-gray-100"
-                                }`}
+                                className={`day p-4 border rounded-lg cursor-pointer h-20 ${getEventColor(day, index)}`}
                                 onClick={() => handleClick(day, index)}
                             >
                                 <div className="text-lg font-semibold">{day + 1}</div>
