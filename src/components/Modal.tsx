@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import EventDetails from "./EventDetails";
 
 interface ModalProps {
@@ -7,7 +7,7 @@ interface ModalProps {
     events: { name: string; time: string; getTimeLeft: () => string }[];
 }
 
-const Modal = ({ isOpen, onClose, events }:ModalProps) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, events }) => {
     const [timeLeft, setTimeLeft] = useState(events.map(event => event.getTimeLeft()));
 
     useEffect(() => {
@@ -23,12 +23,12 @@ const Modal = ({ isOpen, onClose, events }:ModalProps) => {
 
     return (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
-            <div className="bg-white p-4 rounded shadow-lg w-1/2">
+            <div className="bg-white p-6 rounded-lg shadow-lg w-3/4 max-w-lg">
                 <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-xl font-bold">Event Details</h2>
-                    <button onClick={onClose} className="text-gray-500 hover:text-gray-700">&times;</button>
+                    <h2 className="text-2xl font-bold">Event Details</h2>
+                    <button onClick={onClose} className="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
                 </div>
-                <div className="mb-4">
+                <div className="mb-4 space-y-4">
                     {events.map((event, index) => (
                         <EventDetails
                             key={index}
