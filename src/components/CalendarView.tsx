@@ -109,6 +109,9 @@ const CalendarView = ({ dates }: CalendarViewProps) => {
                                 onClick={() => handleClick(day, index)}
                             >
                                 <div className="text-lg font-semibold">{day + 1}</div>
+                                {isCurrentDay(day, index) && (
+                                    <div className="text-xs text-white mt-1">Today</div>
+                                )}
                                 {isDateHighlighted(day, index) && (
                                     <div className="text-xs text-amber-200 mt-1 text-right">
                                         {getEventCount(day, index)} event(s)
