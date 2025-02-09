@@ -72,7 +72,7 @@ const App = () => {
     };
 
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(event.target.value);
+        setSearchTerm(event.target.value.toLowerCase());
     };
 
     const handleEdit = (id: number) => {
@@ -90,8 +90,8 @@ const App = () => {
 
     const filteredDates = dates.filter(
         (item) =>
-            item.date.toISOString().includes(searchTerm) ||
-            item.name.includes(searchTerm)
+            item.date.toISOString().toLowerCase().includes(searchTerm) ||
+            item.name.toLowerCase().includes(searchTerm)
     );
 
     const getTimeLeft = (date: Date) => {
