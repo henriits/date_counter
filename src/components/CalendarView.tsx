@@ -36,6 +36,13 @@ const CalendarView: React.FC<CalendarViewProps> = ({ dates }) => {
         });
     };
 
+    const getEventCount = (day: number, month: number) => {
+        return dates.filter(dateItem => {
+            const date = new Date(dateItem.date);
+            return date.getDate() === day + 1 && date.getMonth() === month && date.getFullYear() === currentYear;
+        }).length;
+    };
+
     const getTimeLeft = (date: Date) => {
         const now = new Date().getTime();
         const timeLeft = date.getTime() - now;
@@ -89,6 +96,11 @@ const CalendarView: React.FC<CalendarViewProps> = ({ dates }) => {
                                 onClick={() => handleClick(day, index)}
                             >
                                 {day + 1}
+                                {isDateHighlighted(day, index) && (
+                                    <div className="text-xs text-gray-700">
+                                        {getEventCount(day, index)} event(s)
+                                    </div>
+                                )}
                             </div>
                         ))}
                     </div>
