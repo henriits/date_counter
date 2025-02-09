@@ -100,8 +100,8 @@ const App = () => {
 
     return (
         <div className="container mx-auto p-6">
-            <h1 className="text-4xl font-bold mb-6">Event Planner</h1>
-            <div className="flex flex-col md:flex-row items-center mb-6 space-y-4 md:space-y-0 md:space-x-4">
+            <h1 className="text-4xl font-bold mb-6 text-center">Event Planner</h1>
+            <div className="flex flex-col md:flex-row items-center mb-6 space-y-4 md:space-y-0 md:space-x-4 text-left">
                 <input
                     type="text"
                     placeholder="Event Name"
@@ -142,7 +142,7 @@ const App = () => {
             {showCalendar ? (
                 <CalendarView dates={dates} />
             ) : (
-                <ul className="list-none space-y-4">
+                <ul className="list-none space-y-4 text-left">
                     {filteredDates.map((item) => (
                         <li key={item.id} className="p-4 border rounded-lg shadow-md">
                             <div className="flex justify-between items-center">

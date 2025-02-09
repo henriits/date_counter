@@ -28,7 +28,7 @@ const Modal = ({ isOpen, onClose, events }: ModalProps) => {
                     <h2 className="text-2xl font-bold">Event Details</h2>
                     <button onClick={onClose} className="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
                 </div>
-                <div className="mb-4 space-y-4">
+                <div className="mb-4 space-y-4 text-left">
                     {events.map((event, index) => (
                         <EventDetails
                             key={index}

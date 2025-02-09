@@ -82,7 +82,7 @@ const CalendarView = ({ dates }: CalendarViewProps) => {
     };
 
     return (
-        <div className="calendar-view relative">
+        <div className="calendar-view relative text-left">
             {months.map((month, index) => (
                 <div key={index} className="month mb-6">
                     <h2 className="text-2xl font-bold mb-4">{month}</h2>
@@ -90,12 +90,12 @@ const CalendarView = ({ dates }: CalendarViewProps) => {
                         {Array.from({ length: getDaysInMonth(index, currentYear) }, (_, day) => (
                             <div
                                 key={day}
-                                className={`day p-4 border rounded-lg cursor-pointer ${isDateHighlighted(day, index) ? "bg-blue-500 text-white" : "bg-gray-100"}`}
+                                className={`day p-4 border rounded-lg cursor-pointer ${isDateHighlighted(day, index) ? "bg-amber-700 text-white" : "bg-gray-100"}`}
                                 onClick={() => handleClick(day, index)}
                             >
                                 <div className="text-lg font-semibold">{day + 1}</div>
                                 {isDateHighlighted(day, index) && (
-                                    <div className="text-xs text-gray-700 mt-1">
+                                    <div className="text-xs text-amber-200 mt-1 text-right">
                                         {getEventCount(day, index)} event(s)
                                     </div>
                                 )}
