@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import Modal from "./Modal";
 
 interface DateItem {
     id: number;
@@ -11,6 +12,11 @@ interface CalendarViewProps {
 }
 
 const CalendarView: React.FC<CalendarViewProps> = ({ dates }) => {
+    const [modal, setModal] = useState<{ isOpen: boolean; content: string }>({
+        isOpen: false,
+        content: "",
+    });
+
     const months = [
         "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
@@ -29,8 +35,30 @@ const CalendarView: React.FC<CalendarViewProps> = ({ dates }) => {
         });
     };
 
+    const getEventDetails = (day: number, month: number) => {
+        const dateItem = dates.find(dateItem => {
+            const date = new Date(dateItem.date);
+            return date.getDate() === day + 1 && date.getMonth() === month && date.getFullYear() === currentYear;
+        });
+        return dateItem ? `${dateItem.name} at ${dateItem.date.toLocaleTimeString("en-GB", { hour12: false })}` : "";
+    };
+
+    const handleClick = (day: number, month: number) => {
+        const content = getEventDetails(day, month);
+        if (content) {
+            setModal({
+                isOpen: true,
+                content,
+            });
+        }
+    };
+
+    const closeModal = () => {
+        setModal({ isOpen: false, content: "" });
+    };
+
     return (
-        <div className="calendar-view">
+        <div className="calendar-view relative">
             {months.map((month, index) => (
                 <div key={index} className="month">
                     <h2 className="text-xl font-bold mb-2">{month}</h2>
@@ -38,7 +66,8 @@ const CalendarView: React.FC<CalendarViewProps> = ({ dates }) => {
                         {Array.from({ length: getDaysInMonth(index, currentYear) }, (_, day) => (
                             <div
                                 key={day}
-                                className={`day p-2 border rounded ${isDateHighlighted(day, index) ? "bg-blue-500 text-white" : ""}`}
+                                className={`day p-2 border rounded cursor-pointer ${isDateHighlighted(day, index) ? "bg-blue-500 text-white" : ""}`}
+                                onClick={() => handleClick(day, index)}
                             >
                                 {day + 1}
                             </div>
@@ -46,6 +75,7 @@ const CalendarView: React.FC<CalendarViewProps> = ({ dates }) => {
                     </div>
                 </div>
             ))}
+            <Modal isOpen={modal.isOpen} onClose={closeModal} content={modal.content} />
         </div>
     );
 };
