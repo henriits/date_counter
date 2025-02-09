@@ -157,6 +157,7 @@ const App = () => {
                         className="input input-bordered w-full md:w-auto"
                     />
                 )}
+                <div className="flex-grow"></div>
                 <button
                     onClick={() => setShowCalendar(!showCalendar)}
                     className="btn btn-secondary w-full md:w-auto"
