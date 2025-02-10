@@ -101,13 +101,11 @@ const App = () => {
             item.name.toLowerCase().includes(searchTerm)
     );
 
-    const getTimeLeft = (date: Date) => {
+    const getTimeLeft = (startDate: Date) => {
         const now = new Date().getTime();
-        const timeLeft = date.getTime() - now;
+        const timeLeft = startDate.getTime() - now;
         const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-        const hours = Math.floor(
-            (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
+        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
         return `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds left`;
@@ -195,7 +193,7 @@ const App = () => {
                                         })}
                                     </span>
                                     <div className="text-sm text-gray-500">
-                                        {getTimeLeft(item.endDate)}
+                                        {getTimeLeft(item.startDate)}
                                     </div>
                                 </div>
                                 <div className="flex space-x-2">
