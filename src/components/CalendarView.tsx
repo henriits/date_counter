@@ -23,8 +23,21 @@ const CalendarView = ({ dates }: CalendarViewProps) => {
         "July", "August", "September", "October", "November", "December"
     ];
 
+    const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
     const getDaysInMonth = (month: number, year: number) => {
         return new Date(year, month + 1, 0).getDate();
+    };
+
+    const getDayOfWeek = (day: number, month: number) => {
+        const date = new Date(currentYear, month, day + 1);
+        const dayOfWeek = date.getDay();
+        return (dayOfWeek === 0 ? 6 : dayOfWeek - 1); // Adjust to start from Monday
+    };
+
+    const getFirstDayOfMonth = (month: number, year: number) => {
+        const firstDay = new Date(year, month, 1).getDay();
+        return (firstDay === 0 ? 6 : firstDay - 1); // Adjust to start from Monday
     };
 
     const currentYear = new Date().getFullYear();
@@ -111,7 +124,7 @@ const CalendarView = ({ dates }: CalendarViewProps) => {
             return "bg-green-500 text-white";
         }
         if (isMultiDayEvent(day, month)) {
-            return "bg-blue-500 text-white";
+            return "bg-amber-500 text-white";
         }
         if (isDateHighlighted(day, month)) {
             return "bg-amber-700 text-white";
@@ -123,22 +136,31 @@ const CalendarView = ({ dates }: CalendarViewProps) => {
         <div className="calendar-view relative text-left">
             {months.map((month, index) => (
                 <div key={index} className="month mb-6">
-                    <h2 className="text-2xl font-bold mb-4">{month}</h2>
+                    <h2 className="sm:text-xl text-2xl font-bold mb-4">{month}</h2>
                     <div className="grid grid-cols-7 gap-2">
+                        {daysOfWeek.map((day, idx) => (
+                            <div key={idx} className="day-header text-center font-semibold">
+                                {day}
+                            </div>
+                        ))}
+                        {Array.from({ length: getFirstDayOfMonth(index, currentYear) }).map((_, idx) => (
+                            <div key={idx} className="day p-4 border rounded-lg h-20 bg-gray-100"></div>
+                        ))}
                         {Array.from({ length: getDaysInMonth(index, currentYear) }, (_, day) => (
                             <div
                                 key={day}
-                                className={`day p-4 border rounded-lg cursor-pointer h-20 ${getEventColor(day, index)}`}
+                                className={`day p-2 border rounded-lg cursor-pointer h-20 ${getEventColor(day, index)}`}
                                 onClick={() => handleClick(day, index)}
                             >
                                 <div className="text-lg font-semibold">{day + 1}</div>
+                                <div className="text-xs text-gray-500">{daysOfWeek[getDayOfWeek(day, index)]}</div>
                                 {isCurrentDay(day, index) && (
-                                    <div className="text-xs text-white mt-1">Today</div>
+                                    <span className="text-xs text-white mt-1">Today</span>
                                 )}
                                 {isDateHighlighted(day, index) && (
-                                    <div className="text-xs text-amber-200 mt-1 text-right">
+                                    <span className="text-xs text-amber-200 mt-1">
                                         {getEventCount(day, index)} event(s)
-                                    </div>
+                                    </span>
                                 )}
                             </div>
                         ))}

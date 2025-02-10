@@ -125,7 +125,7 @@ const App = () => {
     });
 
     return (
-        <div className="container mx-auto p-6">
+        <div className="container w-auto">
             <h1 className="text-4xl font-bold mb-2 text-center">
                 Event Planner
             </h1>
