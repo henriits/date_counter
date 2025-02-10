@@ -132,6 +132,7 @@ const CalendarView = ({ dates }: CalendarViewProps) => {
 
     return (
         <div className="calendar-view relative text-left">
+
             {months.map((month, index) => (
                 <div key={index} className="month mb-6">
                     <h2 className="sm:text-xl text-2xl font-bold mb-4">{month}</h2>

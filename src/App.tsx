@@ -131,6 +131,7 @@ const App = () => {
                 <div className="text-lg font-normal">{currentDate}</div>
                 <div className="text-lg font-normal">{currentTimeString}</div>
             </div>
+            
             <div className="flex flex-col md:flex-row items-center mb-6 space-y-4 md:space-y-0 md:space-x-4 text-left">
                 <input
                     type="text"
@@ -159,7 +160,12 @@ const App = () => {
                 >
                     {editId !== null ? <FaEdit /> : <FaPlus />}
                 </button>
-                {!showCalendar && (
+
+                
+
+            </div>
+            <div className="flex flex-col sm:flex-row justify-between mb-4">
+            {!showCalendar && (
                     <input
                         type="text"
                         placeholder="Search date or name"
@@ -168,13 +174,15 @@ const App = () => {
                         className="input input-bordered w-full md:w-auto px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                 )}
-                <div className="flex-grow"></div>
-                <button
-                    onClick={() => setShowCalendar(!showCalendar)}
-                    className="btn btn-secondary w-full md:w-auto px-4 py-2 rounded-lg bg-gray-500 text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500"
-                >
-                    {showCalendar ? <FaList /> : <FaCalendarAlt />}
-                </button>
+
+                <div className="flex justify-end w-full md:w-auto">
+                    <button
+                        onClick={() => setShowCalendar(!showCalendar)}
+                        className="btn btn-secondary w-full md:w-auto px-4 py-2 rounded-lg bg-gray-500 text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                    >
+                        {showCalendar ? <FaList /> : <FaCalendarAlt />}
+                    </button>
+                </div>
             </div>
             {showCalendar ? (
                 <CalendarView dates={dates} />
