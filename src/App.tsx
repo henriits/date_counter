@@ -34,13 +34,6 @@ const App = () => {
     }, [dates]);
 
     useEffect(() => {
-        const now = new Date();
-        setDates((prevDates) =>
-            prevDates.filter((item) => new Date(item.endDate) > now)
-        );
-    }, [dates]);
-
-    useEffect(() => {
         const interval = setInterval(() => {
             setCurrentTime(new Date());
         }, 1000);
@@ -94,12 +87,14 @@ const App = () => {
         setDates((prevDates) => prevDates.filter((item) => item.id !== id));
     };
 
-    const filteredDates = dates.filter(
-        (item) =>
-            (item.startDate instanceof Date && !isNaN(item.startDate.getTime()) && item.startDate.toISOString().toLowerCase().includes(searchTerm)) ||
-            (item.endDate instanceof Date && !isNaN(item.endDate.getTime()) && item.endDate.toISOString().toLowerCase().includes(searchTerm)) ||
-            item.name.toLowerCase().includes(searchTerm)
-    );
+    const filteredDates = dates
+        .filter((item) => new Date(item.endDate) > currentTime)
+        .filter(
+            (item) =>
+                (item.startDate instanceof Date && !isNaN(item.startDate.getTime()) && item.startDate.toISOString().toLowerCase().includes(searchTerm)) ||
+                (item.endDate instanceof Date && !isNaN(item.endDate.getTime()) && item.endDate.toISOString().toLowerCase().includes(searchTerm)) ||
+                item.name.toLowerCase().includes(searchTerm)
+        );
 
     const getTimeLeft = (startDate: Date) => {
         const now = new Date().getTime();
@@ -160,9 +155,6 @@ const App = () => {
                 >
                     {editId !== null ? <FaEdit /> : <FaPlus />}
                 </button>
-
-                
-
             </div>
             <div className="flex flex-col sm:flex-row justify-between mb-4">
             {!showCalendar && (
