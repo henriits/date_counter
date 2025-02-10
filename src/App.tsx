@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaEdit, FaTrash, FaPlus, FaCalendarAlt, FaList } from "react-icons/fa";
 import CalendarView from "./components/CalendarView";
+import { getTimeLeft } from "./utils/dateUtils";
 import "./App.css";
 
 interface DateItem {
@@ -95,16 +96,6 @@ const App = () => {
                 (item.endDate instanceof Date && !isNaN(item.endDate.getTime()) && item.endDate.toISOString().toLowerCase().includes(searchTerm)) ||
                 item.name.toLowerCase().includes(searchTerm)
         );
-
-    const getTimeLeft = (startDate: Date) => {
-        const now = new Date().getTime();
-        const timeLeft = startDate.getTime() - now;
-        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-        return `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds left`;
-    };
 
     const currentDate = currentTime.toLocaleDateString("en-GB", {
         weekday: "long",
