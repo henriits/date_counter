@@ -1,10 +1,15 @@
-# Date Counter
+# Date Counter / Event Planner
 
-This project is a simple date counter application built with React, TypeScript, and Vite. It allows users to input two dates and calculates the number of days between them. The project includes hot module replacement (HMR) for a smooth development experience and follows some ESLint rules for code quality.
+This project is a simple event planner application built with React, TypeScript, and Vite. It allows users to input events with start and end dates, view them in a calendar format, and see the time left until the events start.
+
+We have all been there, looking for a website that shows us how many days are left until Christmas. 😊
 
 ## Features
 
-- Calculate the number of days between two dates
+- Add, edit, and delete events with start and end dates
+- View events in a calendar format
+- See the time left until events start
+- Stores events in LocalStorage
 - Responsive design
 - TypeScript for type safety
 - ESLint for code quality
@@ -47,90 +52,12 @@ yarn dev
 
 Open your browser and navigate to `http://localhost:3000` to see the application in action.
 
-### Building for Production
 
-To build the application for production:
 
-```sh
-npm run build
-# or
-yarn build
-```
 
-The output will be in the `dist` directory.
 
-### Linting
-
-To run ESLint:
-
-```sh
-npm run lint
-# or
-yarn lint
-```
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` with `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
-
-## Project Structure
-
-```
-date_counter/
-├── public/                 # Static assets
-├── src/                    # Source files
-│   ├── components/         # React components
-│   ├── App.tsx             # Main App component
-│   ├── main.tsx            # Entry point
-│   └── ...                 # Other files
-├── .eslintrc.js            # ESLint configuration
-├── tsconfig.json           # TypeScript configuration
-├── vite.config.ts          # Vite configuration
-└── package.json            # Project metadata and dependencies
-```
 
 ## Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request for any changes.
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
