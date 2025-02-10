@@ -157,7 +157,7 @@ const CalendarView = ({ dates }: CalendarViewProps) => {
                                 )}
                                 {isDateHighlighted(day, index) && (
                                     <span className="text-xs text-amber-200 mt-1">
-                                        {getEventCount(day, index)} event(s)
+                                        {getEventCount(day, index)}
                                     </span>
                                 )}
                             </div>
